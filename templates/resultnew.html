@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDI Prediction Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <h1>📊 Prediction Result</h1>
+      <p>{{ country }}</p>
+    </header>
+
+    <main class="card result-card">
+      <div class="score-circle category-{{ hdi_category | replace(' ', '-') | lower }}">
+        <span class="score">{{ hdi_score }}</span>
+        <span class="label">HDI Score</span>
+      </div>
+
+      <h2 class="category-tag category-{{ hdi_category | replace(' ', '-') | lower }}">
+        {{ hdi_category }} Human Development
+      </h2>
+
+      <table class="details-table">
+        <tr><th>Life Expectancy</th><td>{{ life_expectancy }} years</td></tr>
+        <tr><th>Mean Years of Schooling</th><td>{{ mean_schooling }}</td></tr>
+        <tr><th>Expected Years of Schooling</th><td>{{ expected_schooling }}</td></tr>
+        <tr><th>GNI Per Capita</th><td>${{ '{:,.0f}'.format(gni_per_capita) }}</td></tr>
+      </table>
+
+      <a href="{{ url_for('home') }}" class="btn">Predict Another</a>
+    </main>
+
+    <footer>
+      <p>Built with Flask &middot; Scikit-learn &middot; Pandas &middot; NumPy</p>
+    </footer>
+  </div>
+</body>
+</html>

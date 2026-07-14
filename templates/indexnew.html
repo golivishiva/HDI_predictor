@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDI Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <h1>🌍 Human Development Index Predictor</h1>
+      <p>Predict a country's HDI score using Life Expectancy, Schooling, and GNI per Capita.</p>
+    </header>
+
+    <main class="card">
+      {% if errors %}
+      <div class="alert">
+        <ul>
+          {% for e in errors %}
+          <li>{{ e }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <form action="{{ url_for('predict') }}" method="POST" class="form">
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            {% for c in countries %}
+            <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="life_expectancy">Life Expectancy (years)</label>
+            <input type="number" step="0.1" min="0" max="100" id="life_expectancy"
+                   name="life_expectancy" placeholder="e.g. 72.5" required />
+          </div>
+
+          <div class="form-group">
+            <label for="mean_schooling">Mean Years of Schooling</label>
+            <input type="number" step="0.1" min="0" max="20" id="mean_schooling"
+                   name="mean_schooling" placeholder="e.g. 8.4" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expected_schooling">Expected Years of Schooling</label>
+            <input type="number" step="0.1" min="0" max="25" id="expected_schooling"
+                   name="expected_schooling" placeholder="e.g. 13.2" required />
+          </div>
+
+          <div class="form-group">
+            <label for="gni_per_capita">GNI Per Capita (USD)</label>
+            <input type="number" step="1" min="0" id="gni_per_capita"
+                   name="gni_per_capita" placeholder="e.g. 15000" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn">Predict HDI Score</button>
+      </form>
+    </main>
+
+    <footer>
+      <p>Built with Flask &middot; Scikit-learn &middot; Pandas &middot; NumPy</p>
+    </footer>
+  </div>
+</body>
+</html>
